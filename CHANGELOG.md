@@ -39,3 +39,17 @@ All notable changes to this project will be documented in this file.
     -   Extended `GedcomWriter` with `writeNote`.
     -   Added unit and integration tests.
 
+### Added (GEDCOM Multimedia)
+-   **#8**: Support for parsing and writing Multimedia (`OBJE`) records.
+    -   Implemented `GedcomMultimedia` record.
+    -   Extended `GedcomParser` with `parseMultimedia`.
+    -   Extended `GedcomWriter` with `writeMultimedia`.
+    -   Added unit and integration tests.
+
+### Added (GEDCOM Repository)
+-   **#9**: Support for parsing and writing Repository (`REPO`) records.
+    -   Implemented `GedcomRepository` record.
+    -   Extended `GedcomParser` with `parseRepository`.
+    -   Extended `GedcomWriter` with `writeRepository`.
+    -   Added unit and integration tests.
+

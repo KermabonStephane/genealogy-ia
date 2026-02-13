@@ -9,6 +9,93 @@ import java.util.List;
 public class GedcomParser {
 
 
+    public GedcomRepository parseRepository(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String name = null;
+        String address = null;
+        String phone = null;
+        String email = null;
+        String www = null;
+        String changeDate = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("REPO".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "NAME" -> name = line.value();
+                    case "ADDR" -> address = line.value(); // Simplified - ADDR can be multi-line
+                    case "PHON" -> phone = line.value();
+                    case "EMAIL" -> email = line.value();
+                    case "WWW" -> www = line.value();
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE or ADDR continuation
+            }
+        }
+
+        return new GedcomRepository(xref, name, address, phone, email, www, changeDate);
+    }
+
+    public GedcomMultimedia parseMultimedia(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String format = null;
+        String title = null;
+        String fileMode = null; // Normally stored in FILE tag or sub-record in 5.5.1
+        // In 5.5.1, OBJE has FILE sub-record. In 5.5 OBJE has FORM, TITL, FILE.
+        // Let's assume a simplified structure where FILE contains the path/mode.
+        
+        String changeDate = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("OBJE".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "FORM" -> format = line.value();
+                    case "TITL" -> title = line.value();
+                    case "FILE" -> fileMode = line.value(); // In 5.5.1 this is likely the filename
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE
+            }
+        }
+
+        return new GedcomMultimedia(xref, format, title, fileMode, changeDate);
+    }
+
     public GedcomNote parseNote(Reader reader) throws IOException {
         BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
         String lineStr;

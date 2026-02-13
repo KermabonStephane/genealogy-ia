@@ -12,6 +12,10 @@ To read and write standard GEDCOM 5.5 and 5.5.1 files, which are the industry st
 -   **Family Writing**: Ability to generate `FAM` records.
 -   **Note Parsing**: Support for reading `NOTE` records including continuation lines (`CONT`/`CONC`).
 -   **Note Writing**: Ability to generate `NOTE` records.
+-   **Multimedia Parsing**: Support for reading `OBJE` (multimedia) records including format, title, and file.
+-   **Multimedia Writing**: Ability to generate `OBJE` records.
+-   **Repository Parsing**: Support for reading `REPO` (repository) records including name, address, phone, email, and website.
+-   **Repository Writing**: Ability to generate `REPO` records.
 -   **Charset Support**: Integrates with the `ansel` module for character set handling.
 
 ## 🔍 Usage
@@ -39,4 +43,16 @@ GedcomFamily fam = parser.parseFamily(reader);
 ```java
 Reader reader = ...; // Reader positioned at note record
 GedcomNote note = parser.parseNote(reader);
+```
+
+### Multimedia
+```java
+Reader reader = ...; // Reader positioned at multimedia record
+GedcomMultimedia media = parser.parseMultimedia(reader);
+```
+
+### Repository
+```java
+Reader reader = ...; // Reader positioned at repository record
+GedcomRepository repo = parser.parseRepository(reader);
 ```

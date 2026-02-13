@@ -9,6 +9,8 @@ The core data structure is defined using Java Records for immutability and conci
 -   `GedcomIndividual`: Record for Individual (`INDI`) data.
 -   `GedcomFamily`: Record for Family (`FAM`) data.
 -   `GedcomNote`: Record for Note (`NOTE`) data.
+-   `GedcomMultimedia`: Record for Multimedia (`OBJE`) data.
+-   `GedcomRepository`: Record for Repository (`REPO`) data.
 -   `GedcomLine`: Represents a raw line (Level, Tag, Value).
 -   Nested records: `GedcomName`, `GedcomEvent`, `GedcomDate`.
 
@@ -29,7 +31,13 @@ Unit tests use **Spock Framework**.
 -   `GedcomWriterFamilySpec`: Tests generation of family records.
 -   `GedcomNoteSpec`: Tests parsing of note records.
 -   `GedcomWriterNoteSpec`: Tests generation of note records.
+-   `GedcomMultimediaSpec`: Tests parsing of multimedia records.
+-   `GedcomWriterMultimediaSpec`: Tests generation of multimedia records.
+-   `GedcomRepositorySpec`: Tests parsing of repository records.
+-   `GedcomWriterRepositorySpec`: Tests generation of repository records.
 -   `GedcomIntegrationSpec`: Integration tests for Header.
 -   `GedcomIndividualIntegrationSpec`: Integration tests for Individual.
 -   `GedcomFamilyIntegrationSpec`: Integration tests for Family.
 -   `GedcomNoteIntegrationSpec`: Integration tests for Note.
+-   `GedcomMultimediaIntegrationSpec`: Integration tests for Multimedia.
+-   `GedcomRepositoryIntegrationSpec`: Integration tests for Repository.

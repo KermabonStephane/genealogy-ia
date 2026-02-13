@@ -5,6 +5,34 @@ import java.io.Writer;
 
 public class GedcomWriter {
 
+    public void writeRepository(GedcomRepository repo, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, repo.xref(), "REPO", null));
+        
+        if (repo.name() != null) writeLine(writer, new GedcomLine(1, null, "NAME", repo.name()));
+        if (repo.address() != null) writeLine(writer, new GedcomLine(1, null, "ADDR", repo.address()));
+        if (repo.phone() != null) writeLine(writer, new GedcomLine(1, null, "PHON", repo.phone()));
+        if (repo.email() != null) writeLine(writer, new GedcomLine(1, null, "EMAIL", repo.email()));
+        if (repo.www() != null) writeLine(writer, new GedcomLine(1, null, "WWW", repo.www()));
+
+        if (repo.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", repo.changeDate()));
+        }
+    }
+
+    public void writeMultimedia(GedcomMultimedia media, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, media.xref(), "OBJE", null));
+        
+        if (media.format() != null) writeLine(writer, new GedcomLine(1, null, "FORM", media.format()));
+        if (media.title() != null) writeLine(writer, new GedcomLine(1, null, "TITL", media.title()));
+        if (media.fileMode() != null) writeLine(writer, new GedcomLine(1, null, "FILE", media.fileMode()));
+
+        if (media.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", media.changeDate()));
+        }
+    }
+
     public void writeNote(GedcomNote note, Writer writer) throws IOException {
         String firstLine = null;
         String remaining = null;
