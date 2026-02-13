@@ -5,6 +5,22 @@ import java.io.Writer;
 
 public class GedcomWriter {
 
+    public void writeSubmission(GedcomSubmission subn, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, subn.xref(), "SUBN", null));
+        
+        if (subn.submitterXref() != null) writeLine(writer, new GedcomLine(1, null, "SUBM", subn.submitterXref()));
+        if (subn.familyFileName() != null) writeLine(writer, new GedcomLine(1, null, "FAMF", subn.familyFileName()));
+        if (subn.templeCode() != null) writeLine(writer, new GedcomLine(1, null, "TEMP", subn.templeCode()));
+        if (subn.ancestorsCount() != null) writeLine(writer, new GedcomLine(1, null, "ANCE", subn.ancestorsCount()));
+        if (subn.descendantsCount() != null) writeLine(writer, new GedcomLine(1, null, "DESC", subn.descendantsCount()));
+        if (subn.ordinanceFlag() != null) writeLine(writer, new GedcomLine(1, null, "ORDI", subn.ordinanceFlag()));
+
+        if (subn.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", subn.changeDate()));
+        }
+    }
+
     public void writeSubmitter(GedcomSubmitter subm, Writer writer) throws IOException {
         writeLine(writer, new GedcomLine(0, subm.xref(), "SUBM", null));
         

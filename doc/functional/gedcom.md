@@ -20,6 +20,8 @@ To read and write standard GEDCOM 5.5 and 5.5.1 files, which are the industry st
 -   **Source Writing**: Ability to generate `SOUR` records.
 -   **Submitter Parsing**: Support for reading `SUBM` (submitter) records including name, address, phone, email, and language.
 -   **Submitter Writing**: Ability to generate `SUBM` records.
+-   **Submission Parsing**: Support for reading `SUBN` (submission) records including submitter links and genealogical data counts.
+-   **Submission Writing**: Ability to generate `SUBN` records.
 -   **Charset Support**: Integrates with the `ansel` module for character set handling.
 
 ## 🔍 Usage
@@ -71,4 +73,10 @@ GedcomSource source = parser.parseSource(reader);
 ```java
 Reader reader = ...; // Reader positioned at submitter record
 GedcomSubmitter subm = parser.parseSubmitter(reader);
+```
+
+### Submission
+```java
+Reader reader = ...; // Reader positioned at submission record
+GedcomSubmission subn = parser.parseSubmission(reader);
 ```

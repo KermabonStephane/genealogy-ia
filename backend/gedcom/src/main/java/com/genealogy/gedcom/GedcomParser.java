@@ -9,6 +9,52 @@ import java.util.List;
 public class GedcomParser {
 
 
+    public GedcomSubmission parseSubmission(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String submitterXref = null;
+        String familyFileName = null;
+        String templeCode = null;
+        String ancestorsCount = null;
+        String descendantsCount = null;
+        String ordinanceFlag = null;
+        String changeDate = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("SUBN".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "SUBM" -> submitterXref = line.value();
+                    case "FAMF" -> familyFileName = line.value();
+                    case "TEMP" -> templeCode = line.value();
+                    case "ANCE" -> ancestorsCount = line.value();
+                    case "DESC" -> descendantsCount = line.value();
+                    case "ORDI" -> ordinanceFlag = line.value();
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE
+            }
+        }
+
+        return new GedcomSubmission(xref, submitterXref, familyFileName, templeCode, ancestorsCount, descendantsCount, ordinanceFlag, changeDate);
+    }
+
     public GedcomSubmitter parseSubmitter(Reader reader) throws IOException {
         BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
         String lineStr;
