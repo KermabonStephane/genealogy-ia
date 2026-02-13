@@ -6,7 +6,7 @@ To read and write standard GEDCOM 5.5 and 5.5.1 files, which are the industry st
 ## 📋 Features
 -   **Header Parsing**: Full support for reading the `HEAD` record.
 -   **Header Writing**: Ability to generate a compliant `HEAD` record.
--   **Individual Parsing**: Support for reading `INDI` records including names, sex, events, and family links.
+-   **Individual Parsing**: Support for reading `INDI` records including full name parts (given name, surname, nickname, prefix, surname prefix, suffix), sex, events, and family links.
 -   **Individual Writing**: Ability to generate `INDI` records.
 -   **Family Parsing**: Support for reading `FAM` records including husband, wife, children, and events.
 -   **Family Writing**: Ability to generate `FAM` records.

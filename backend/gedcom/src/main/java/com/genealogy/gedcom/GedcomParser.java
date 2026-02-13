@@ -360,6 +360,10 @@ public class GedcomParser {
         String currentNameValue = null;
         String currentGiven = null;
         String currentSurname = null;
+        String currentNickname = null;
+        String currentPrefix = null;
+        String currentSurnamePrefix = null;
+        String currentSuffix = null;
 
         String currentEventType = null;
         String currentEventDate = null;
@@ -382,8 +386,8 @@ public class GedcomParser {
 
             if (line.level() == 1) {
                 if (currentNameValue != null) {
-                    names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, null, null));
-                    currentNameValue = null; currentGiven = null; currentSurname = null;
+                    names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname, currentPrefix, currentSurnamePrefix, currentSuffix));
+                    currentNameValue = null; currentGiven = null; currentSurname = null; currentNickname = null; currentPrefix = null; currentSurnamePrefix = null; currentSuffix = null;
                 }
                 if (currentEventType != null) {
                      events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, null));
@@ -400,8 +404,14 @@ public class GedcomParser {
                 }
             } else if (line.level() == 2) {
                 if (currentNameValue != null) {
-                    if ("SURN".equals(line.tag())) currentSurname = line.value();
-                    if ("GIVN".equals(line.tag())) currentGiven = line.value();
+                    switch (line.tag()) {
+                        case "GIVN" -> currentGiven = line.value();
+                        case "SURN" -> currentSurname = line.value();
+                        case "NICK" -> currentNickname = line.value();
+                        case "NPFX" -> currentPrefix = line.value();
+                        case "SPFX" -> currentSurnamePrefix = line.value();
+                        case "NSFX" -> currentSuffix = line.value();
+                    }
                 }
                 if (currentEventType != null) {
                     if ("DATE".equals(line.tag())) currentEventDate = line.value();
@@ -411,7 +421,7 @@ public class GedcomParser {
         }
         
         if (currentNameValue != null) {
-             names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, null, null));
+             names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname, currentPrefix, currentSurnamePrefix, currentSuffix));
         }
         if (currentEventType != null) {
              events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, null));

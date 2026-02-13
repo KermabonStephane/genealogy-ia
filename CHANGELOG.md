@@ -81,4 +81,18 @@ All notable changes to this project will be documented in this file.
     -   Test verifies: 1 Header, 1 Submitter, 643 Individuals, 242 Families, 3 Sources, 2 Notes, 13 Multimedia objects.
     -   Validates UTF-8 encoding support and real-world GEDCOM compatibility.
 
+### Added (Genealogy Tree Module)
+-   **#14**: Created new `genealogy-tree` module for modern genealogy object model.
+    -   Initialized module structure with Maven configuration.
+    -   Set up directory structure for Java source and Spock tests.
+    -   Configured Spock Framework for testing.
+    -   Added module README with architecture overview.
+    -   Implemented `TreeCreator` and `GenealogyTree` records with audit information (UUID, timestamps).
+    -   Integrated **Hibernate Validator** (Jakarta Bean Validation) for attribute verification.
+    -   Added validation annotations (`@NotNull`, `@NotBlank`, `@Email`, `@Valid`) to tree models.
+    -   Updated unit tests to verify constraints using `jakarta.validation.Validator`.
+    -   Enhanced `GedcomName` record with support for full name parts: `nickname`, `surnamePrefix`, `prefix`, `suffix`.
+    -   Updated `GedcomParser` and `GedcomWriter` to handle `NICK`, `NPFX`, `SPFX`, and `NSFX` tags.
+
+
 

@@ -202,7 +202,9 @@ public class GedcomWriter {
             writeLine(writer, new GedcomLine(1, null, "NAME", name.value()));
             if (name.givenName() != null) writeLine(writer, new GedcomLine(2, null, "GIVN", name.givenName()));
             if (name.surname() != null) writeLine(writer, new GedcomLine(2, null, "SURN", name.surname()));
+            if (name.nickname() != null) writeLine(writer, new GedcomLine(2, null, "NICK", name.nickname()));
             if (name.prefix() != null) writeLine(writer, new GedcomLine(2, null, "NPFX", name.prefix()));
+            if (name.surnamePrefix() != null) writeLine(writer, new GedcomLine(2, null, "SPFX", name.surnamePrefix()));
             if (name.suffix() != null) writeLine(writer, new GedcomLine(2, null, "NSFX", name.suffix()));
         }
         

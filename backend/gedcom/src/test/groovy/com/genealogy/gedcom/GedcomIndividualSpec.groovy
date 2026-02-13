@@ -42,4 +42,34 @@ class GedcomIndividualSpec extends Specification {
         ind.spouseFamilyLinks() == ["@F1@"]
         ind.childFamilyLinks() == ["@F2@"]
     }
+    def "should parse individual with full name parts"() {
+        given:
+        def gedcom = """0 @I2@ INDI
+1 NAME Stéphane /de Kermabon/
+2 GIVN Stéphane
+2 SURN Kermabon
+2 SPFX de
+2 NICK Steph
+2 NPFX Sir
+2 NSFX III
+"""
+        def reader = new StringReader(gedcom)
+        def parser = new com.genealogy.gedcom.GedcomParser()
+
+        when:
+        def ind = parser.parseIndividual(reader)
+
+        then:
+        ind.xref() == "@I2@"
+        ind.names().size() == 1
+        with(ind.names()[0]) {
+            value() == "Stéphane /de Kermabon/"
+            givenName() == "Stéphane"
+            surname() == "Kermabon"
+            surnamePrefix() == "de"
+            nickname() == "Steph"
+            prefix() == "Sir"
+            suffix() == "III"
+        }
+    }
 }
