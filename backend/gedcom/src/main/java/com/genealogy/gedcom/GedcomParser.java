@@ -9,6 +9,52 @@ import java.util.List;
 public class GedcomParser {
 
 
+    public GedcomSubmitter parseSubmitter(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String name = null;
+        String address = null;
+        String phone = null;
+        String email = null;
+        String www = null;
+        String language = null;
+        String changeDate = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("SUBM".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "NAME" -> name = line.value();
+                    case "ADDR" -> address = line.value();
+                    case "PHON" -> phone = line.value();
+                    case "EMAIL" -> email = line.value();
+                    case "WWW" -> www = line.value();
+                    case "LANG" -> language = line.value();
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE or ADDR continuation
+            }
+        }
+
+        return new GedcomSubmitter(xref, name, address, phone, email, www, language, changeDate);
+    }
+
     public GedcomSource parseSource(Reader reader) throws IOException {
         BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
         String lineStr;

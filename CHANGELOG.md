@@ -60,3 +60,10 @@ All notable changes to this project will be documented in this file.
     -   Extended `GedcomWriter` with `writeSource`.
     -   Added unit and integration tests.
 
+### Added (GEDCOM Submitter)
+-   **#11**: Support for parsing and writing Submitter (`SUBM`) records.
+    -   Implemented `GedcomSubmitter` record.
+    -   Extended `GedcomParser` with `parseSubmitter`.
+    -   Extended `GedcomWriter` with `writeSubmitter`.
+    -   Added unit and integration tests.
+

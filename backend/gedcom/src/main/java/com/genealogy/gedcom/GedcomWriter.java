@@ -5,6 +5,22 @@ import java.io.Writer;
 
 public class GedcomWriter {
 
+    public void writeSubmitter(GedcomSubmitter subm, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, subm.xref(), "SUBM", null));
+        
+        if (subm.name() != null) writeLine(writer, new GedcomLine(1, null, "NAME", subm.name()));
+        if (subm.address() != null) writeLine(writer, new GedcomLine(1, null, "ADDR", subm.address()));
+        if (subm.phone() != null) writeLine(writer, new GedcomLine(1, null, "PHON", subm.phone()));
+        if (subm.email() != null) writeLine(writer, new GedcomLine(1, null, "EMAIL", subm.email()));
+        if (subm.www() != null) writeLine(writer, new GedcomLine(1, null, "WWW", subm.www()));
+        if (subm.language() != null) writeLine(writer, new GedcomLine(1, null, "LANG", subm.language()));
+
+        if (subm.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", subm.changeDate()));
+        }
+    }
+
     public void writeSource(GedcomSource source, Writer writer) throws IOException {
         writeLine(writer, new GedcomLine(0, source.xref(), "SOUR", null));
         

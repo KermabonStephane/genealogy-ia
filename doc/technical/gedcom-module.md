@@ -11,6 +11,8 @@ The core data structure is defined using Java Records for immutability and conci
 -   `GedcomNote`: Record for Note (`NOTE`) data.
 -   `GedcomMultimedia`: Record for Multimedia (`OBJE`) data.
 -   `GedcomRepository`: Record for Repository (`REPO`) data.
+-   `GedcomSource`: Record for Source (`SOUR`) data.
+-   `GedcomSubmitter`: Record for Submitter (`SUBM`) data.
 -   `GedcomLine`: Represents a raw line (Level, Tag, Value).
 -   Nested records: `GedcomName`, `GedcomEvent`, `GedcomDate`.
 
@@ -35,9 +37,15 @@ Unit tests use **Spock Framework**.
 -   `GedcomWriterMultimediaSpec`: Tests generation of multimedia records.
 -   `GedcomRepositorySpec`: Tests parsing of repository records.
 -   `GedcomWriterRepositorySpec`: Tests generation of repository records.
+-   `GedcomSourceSpec`: Tests parsing of source records.
+-   `GedcomWriterSourceSpec`: Tests generation of source records.
+-   `GedcomSubmitterSpec`: Tests parsing of submitter records.
+-   `GedcomWriterSubmitterSpec`: Tests generation of submitter records.
 -   `GedcomIntegrationSpec`: Integration tests for Header.
 -   `GedcomIndividualIntegrationSpec`: Integration tests for Individual.
 -   `GedcomFamilyIntegrationSpec`: Integration tests for Family.
 -   `GedcomNoteIntegrationSpec`: Integration tests for Note.
 -   `GedcomMultimediaIntegrationSpec`: Integration tests for Multimedia.
 -   `GedcomRepositoryIntegrationSpec`: Integration tests for Repository.
+-   `GedcomSourceIntegrationSpec`: Integration tests for Source.
+-   `GedcomSubmitterIntegrationSpec`: Integration tests for Submitter.

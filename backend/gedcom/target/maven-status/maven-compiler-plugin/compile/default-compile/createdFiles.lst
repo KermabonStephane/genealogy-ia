@@ -10,6 +10,7 @@ com/genealogy/gedcom/GedcomDate.class
 com/genealogy/gedcom/GedcomEvent.class
 com/genealogy/gedcom/GedcomRepository.class
 com/genealogy/gedcom/GedcomLine.class
+com/genealogy/gedcom/GedcomSubmitter.class
 com/genealogy/gedcom/GedcomHeader$Address.class
 com/genealogy/gedcom/GedcomNote.class
 com/genealogy/gedcom/GedcomSource.class
