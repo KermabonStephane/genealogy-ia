@@ -74,3 +74,11 @@ All notable changes to this project will be documented in this file.
     -   Extended `GedcomWriter` with `writeSubmission`.
     -   Added unit and integration tests.
 
+### Added (GEDCOM Real File Integration Test)
+-   **#13**: Integration test for real GEDCOM file (kermabon.ged).
+    -   Added `kermabon.ged` (UTF-8 encoded, 643 individuals, 242 families) to test resources.
+    -   Created `GedcomFileReadSpec` to validate record counts and parsing.
+    -   Test verifies: 1 Header, 1 Submitter, 643 Individuals, 242 Families, 3 Sources, 2 Notes, 13 Multimedia objects.
+    -   Validates UTF-8 encoding support and real-world GEDCOM compatibility.
+
+
