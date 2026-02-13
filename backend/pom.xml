@@ -142,5 +142,6 @@
 
     <modules>
         <module>ansel</module>
+        <module>gedcom</module>
     </modules>
 </project>
