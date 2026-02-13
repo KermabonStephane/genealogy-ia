@@ -9,6 +9,52 @@ import java.util.List;
 public class GedcomParser {
 
 
+    public GedcomSource parseSource(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String title = null;
+        String author = null;
+        String publication = null;
+        String abbreviation = null;
+        String repositoryXref = null;
+        String text = null;
+        String changeDate = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("SOUR".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "TITL" -> title = line.value();
+                    case "AUTH" -> author = line.value();
+                    case "PUBL" -> publication = line.value();
+                    case "ABBR" -> abbreviation = line.value();
+                    case "REPO" -> repositoryXref = line.value();
+                    case "TEXT" -> text = line.value(); // Could be multi-line with CONT
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE or TEXT continuation
+            }
+        }
+
+        return new GedcomSource(xref, title, author, publication, abbreviation, repositoryXref, text, changeDate);
+    }
+
     public GedcomRepository parseRepository(Reader reader) throws IOException {
         BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
         String lineStr;

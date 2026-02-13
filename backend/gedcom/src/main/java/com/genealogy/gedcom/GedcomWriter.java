@@ -5,6 +5,22 @@ import java.io.Writer;
 
 public class GedcomWriter {
 
+    public void writeSource(GedcomSource source, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, source.xref(), "SOUR", null));
+        
+        if (source.title() != null) writeLine(writer, new GedcomLine(1, null, "TITL", source.title()));
+        if (source.author() != null) writeLine(writer, new GedcomLine(1, null, "AUTH", source.author()));
+        if (source.publication() != null) writeLine(writer, new GedcomLine(1, null, "PUBL", source.publication()));
+        if (source.abbreviation() != null) writeLine(writer, new GedcomLine(1, null, "ABBR", source.abbreviation()));
+        if (source.repositoryXref() != null) writeLine(writer, new GedcomLine(1, null, "REPO", source.repositoryXref()));
+        if (source.text() != null) writeLine(writer, new GedcomLine(1, null, "TEXT", source.text()));
+
+        if (source.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", source.changeDate()));
+        }
+    }
+
     public void writeRepository(GedcomRepository repo, Writer writer) throws IOException {
         writeLine(writer, new GedcomLine(0, repo.xref(), "REPO", null));
         

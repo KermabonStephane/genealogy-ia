@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.genealogy.ansel.AnselCharsetSpec" time="0.374" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.genealogy.ansel.AnselCharsetSpec" time="0.412" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="/Users/stephanekermabon/.sdkman/candidates/java/25.0.1-tem/lib"/>
-    <property name="sun.java.command" value="/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire/surefirebooter-20260213151613577_3.jar /Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire 2026-02-13T15-16-13_488-jvmRun1 surefire-20260213151613577_1tmp surefire_0-20260213151613577_2tmp"/>
+    <property name="sun.java.command" value="/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire/surefirebooter-20260213152031830_3.jar /Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire 2026-02-13T15-20-31_736-jvmRun1 surefire-20260213152031830_1tmp surefire_0-20260213152031830_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/test-classes:/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/classes:/Users/stephanekermabon/.m2/repository/org/projectlombok/lombok/1.18.40/lombok-1.18.40.jar:/Users/stephanekermabon/.m2/repository/org/spockframework/spock-core/2.4-groovy-5.0/spock-core-2.4-groovy-5.0.jar:/Users/stephanekermabon/.m2/repository/org/junit/platform/junit-platform-engine/1.14.1/junit-platform-engine-1.14.1.jar:/Users/stephanekermabon/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/stephanekermabon/.m2/repository/org/junit/platform/junit-platform-commons/1.14.1/junit-platform-commons-1.14.1.jar:/Users/stephanekermabon/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/stephanekermabon/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/Users/stephanekermabon/.m2/repository/io/leangen/geantyref/geantyref/1.3.16/geantyref-1.3.16.jar:/Users/stephanekermabon/.m2/repository/org/apache/groovy/groovy/5.0.3/groovy-5.0.3.jar:"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire/surefirebooter-20260213151613577_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/stephanekermabon/Perso/genealogy-ia/backend/ansel/target/surefire/surefirebooter-20260213152031830_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="25.0.1+8-LTS"/>
@@ -60,12 +60,12 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="Should handle basic ASCII characters" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.11"/>
-  <testcase name="Should handle special character L slash (Ł)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.048"/>
+  <testcase name="Should handle basic ASCII characters" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.111"/>
+  <testcase name="Should handle special character L slash (Ł)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.058"/>
   <testcase name="Should handle special character O slash (Ø)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.001"/>
   <testcase name="Should handle special character Eth (ð)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.001"/>
-  <testcase name="Should handle special character #name (#unicodeChar)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.242"/>
-  <testcase name="Should handle combining diacritic acute e" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.008"/>
-  <testcase name="Should handle combining diacritic #name" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.01"/>
+  <testcase name="Should handle special character #name (#unicodeChar)" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.275"/>
+  <testcase name="Should handle combining diacritic acute e" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.011"/>
+  <testcase name="Should handle combining diacritic #name" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.012"/>
   <testcase name="Should decode complex sequence" classname="com.genealogy.ansel.AnselCharsetSpec" time="0.004"/>
 </testsuite>

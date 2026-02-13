@@ -53,3 +53,10 @@ All notable changes to this project will be documented in this file.
     -   Extended `GedcomWriter` with `writeRepository`.
     -   Added unit and integration tests.
 
+### Added (GEDCOM Source)
+-   **#10**: Support for parsing and writing Source (`SOUR`) records.
+    -   Implemented `GedcomSource` record.
+    -   Extended `GedcomParser` with `parseSource`.
+    -   Extended `GedcomWriter` with `writeSource`.
+    -   Added unit and integration tests.
+
