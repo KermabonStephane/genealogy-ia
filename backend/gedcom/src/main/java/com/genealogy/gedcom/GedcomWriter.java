@@ -5,6 +5,56 @@ import java.io.Writer;
 
 public class GedcomWriter {
 
+    public void writeNote(GedcomNote note, Writer writer) throws IOException {
+        String firstLine = null;
+        String remaining = null;
+        
+        if (note.value() != null) {
+             // Simple splitting for CONC/CONT not fully implemented yet, just dumping first line?
+             // Or assuming value doesn't contain newlines implies simple value.
+             // If value contains newlines, we need to handle CONT.
+             String[] lines = note.value().split("\n", -1); // -1 to keep empty lines?
+             firstLine = lines.length > 0 ? lines[0] : null;
+             // Logic for remaining lines...
+             
+             writeLine(writer, new GedcomLine(0, note.xref(), "NOTE", firstLine));
+             
+             for (int i = 1; i < lines.length; i++) {
+                 writeLine(writer, new GedcomLine(1, null, "CONT", lines[i]));
+             }
+        } else {
+             writeLine(writer, new GedcomLine(0, note.xref(), "NOTE", null));
+        }
+
+        if (note.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", note.changeDate()));
+        }
+    }
+
+    public void writeFamily(GedcomFamily fam, Writer writer) throws IOException {
+        writeLine(writer, new GedcomLine(0, fam.xref(), "FAM", null));
+        
+        if (fam.husbandXref() != null) writeLine(writer, new GedcomLine(1, null, "HUSB", fam.husbandXref()));
+        if (fam.wifeXref() != null) writeLine(writer, new GedcomLine(1, null, "WIFE", fam.wifeXref()));
+        
+        for (String chil : fam.childrenXrefs()) {
+            writeLine(writer, new GedcomLine(1, null, "CHIL", chil));
+        }
+        
+        for (GedcomEvent event : fam.events()) {
+            writeLine(writer, new GedcomLine(1, null, event.type(), null));
+            if (event.date() != null) writeLine(writer, new GedcomLine(2, null, "DATE", event.date().date()));
+            if (event.place() != null) writeLine(writer, new GedcomLine(2, null, "PLAC", event.place()));
+            if (event.note() != null) writeLine(writer, new GedcomLine(2, null, "NOTE", event.note()));
+        }
+        
+        if (fam.changeDate() != null) {
+             writeLine(writer, new GedcomLine(1, null, "CHAN", null));
+             writeLine(writer, new GedcomLine(2, null, "DATE", fam.changeDate()));
+        }
+    }
+
     public void writeHeader(GedcomHeader header, Writer writer) throws IOException {
         writeLine(writer, new GedcomLine(0, null, "HEAD", null));
         

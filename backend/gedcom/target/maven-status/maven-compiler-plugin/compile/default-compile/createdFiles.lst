@@ -1,6 +1,7 @@
 com/genealogy/gedcom/GedcomHeader.class
 com/genealogy/gedcom/GedcomHeader$Corporate.class
 com/genealogy/gedcom/GedcomHeader$TransmissionDate.class
+com/genealogy/gedcom/GedcomFamily.class
 com/genealogy/gedcom/GedcomHeader$Source.class
 com/genealogy/gedcom/GedcomWriter.class
 com/genealogy/gedcom/GedcomIndividual.class
@@ -8,6 +9,7 @@ com/genealogy/gedcom/GedcomDate.class
 com/genealogy/gedcom/GedcomEvent.class
 com/genealogy/gedcom/GedcomLine.class
 com/genealogy/gedcom/GedcomHeader$Address.class
+com/genealogy/gedcom/GedcomNote.class
 com/genealogy/gedcom/GedcomName.class
 com/genealogy/gedcom/GedcomParser.class
 com/genealogy/gedcom/GedcomHeader$GedcomVersion.class

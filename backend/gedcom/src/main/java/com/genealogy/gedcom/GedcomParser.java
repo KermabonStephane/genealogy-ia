@@ -9,6 +9,116 @@ import java.util.List;
 public class GedcomParser {
 
 
+    public GedcomNote parseNote(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String value = null;
+        String changeDate = null;
+        
+        StringBuilder noteBuilder = new StringBuilder();
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("NOTE".equals(line.tag())) {
+                        xref = line.xref();
+                        if (line.value() != null) {
+                            noteBuilder.append(line.value());
+                        }
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                switch (line.tag()) {
+                    case "CONC" -> {
+                         if (line.value() != null) noteBuilder.append(line.value());
+                    }
+                    case "CONT" -> {
+                         noteBuilder.append("\n"); 
+                         if (line.value() != null) noteBuilder.append(line.value());
+                    }
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                 // CHAN.DATE
+            }
+        }
+        
+        value = noteBuilder.toString();
+        if (value.isEmpty()) value = null;
+
+        return new GedcomNote(xref, value, changeDate);
+    }
+
+    public GedcomFamily parseFamily(Reader reader) throws IOException {
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        String lineStr;
+        GedcomLine line;
+
+        String xref = null;
+        String husbandXref = null;
+        String wifeXref = null;
+        List<String> childrenXrefs = new ArrayList<>();
+        List<GedcomEvent> events = new ArrayList<>();
+        String changeDate = null;
+
+        String currentEventType = null;
+        String currentEventDate = null;
+        String currentEventPlace = null;
+        String currentEventNote = null;
+
+        while ((lineStr = bufferedReader.readLine()) != null) {
+            line = GedcomLine.parse(lineStr);
+            if (line == null) continue;
+
+            if (line.level() == 0) {
+                if (xref == null) {
+                   if ("FAM".equals(line.tag())) {
+                        xref = line.xref();
+                   }
+                } else {
+                    break;
+                }
+            }
+
+            if (line.level() == 1) {
+                if (currentEventType != null) {
+                     events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, currentEventNote));
+                     currentEventType = null; currentEventDate = null; currentEventPlace = null; currentEventNote = null;
+                }
+
+                switch (line.tag()) {
+                    case "HUSB" -> husbandXref = line.value();
+                    case "WIFE" -> wifeXref = line.value();
+                    case "CHIL" -> childrenXrefs.add(line.value());
+                    case "MARR", "DIV" -> currentEventType = line.tag();
+                    case "CHAN" -> {} 
+                }
+            } else if (line.level() == 2) {
+                if (currentEventType != null) {
+                    if ("DATE".equals(line.tag())) currentEventDate = line.value();
+                    if ("PLAC".equals(line.tag())) currentEventPlace = line.value();
+                    if ("NOTE".equals(line.tag())) currentEventNote = line.value();
+                }
+            }
+        }
+        
+        if (currentEventType != null) {
+             events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, currentEventNote));
+        }
+
+        return new GedcomFamily(xref, husbandXref, wifeXref, childrenXrefs, events, changeDate);
+    }
+
     public GedcomIndividual parseIndividual(Reader reader) throws IOException {
         BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
         String lineStr;

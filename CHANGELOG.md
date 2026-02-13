@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
     -   Added Spock unit tests for encoding/decoding.
     -   Documentation added in `doc/functional/ansel.md` and `doc/technical/ansel-module.md`.
 
-### Added (GEDCOM)
+### Added (GEDCOM Header)
 -   **#4**: Created `gedcom` Maven module.
     -   Implemented `GedcomHeader` record and nested records.
     -   Implemented `GedcomParser` (Header only).
@@ -23,5 +23,19 @@ All notable changes to this project will be documented in this file.
     -   Implemented `GedcomIndividual`, `GedcomName`, `GedcomEvent`, `GedcomDate` records.
     -   Extended `GedcomParser` with `parseIndividual`.
     -   Extended `GedcomWriter` with `writeIndividual`.
+    -   Added unit and integration tests.
+
+### Added (GEDCOM Family)
+-   **#6**: Support for parsing and writing Family (`FAM`) records.
+    -   Implemented `GedcomFamily` record.
+    -   Extended `GedcomParser` with `parseFamily`.
+    -   Extended `GedcomWriter` with `writeFamily`.
+    -   Added unit and integration tests.
+
+### Added (GEDCOM Note)
+-   **#7**: Support for parsing and writing Note (`NOTE`) records.
+    -   Implemented `GedcomNote` record.
+    -   Extended `GedcomParser` with `parseNote` (supports CONT/CONC).
+    -   Extended `GedcomWriter` with `writeNote`.
     -   Added unit and integration tests.
 
