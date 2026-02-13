@@ -1,0 +1,5 @@
+com/genealogy/ansel/AnselCharset.class
+com/genealogy/ansel/AnselCharsetProvider.class
+com/genealogy/ansel/AnselCharset$Encoder.class
+com/genealogy/ansel/AnselMapping.class
+com/genealogy/ansel/AnselCharset$Decoder.class

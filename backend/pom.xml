@@ -21,23 +21,14 @@
         <objenesis.version>3.4</objenesis.version>
         <hamcrest.version>3.0</hamcrest.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <spock.version>2.4-groovy-4.0</spock.version> <!-- Update to groovy-5.0 if available, but
-        staying safe with 4.0 or whatever is stable/recommended in the skill template was 5.0 -->
-        <!-- Skill template used spock-core 2.4-groovy-5.0.3. Let's stick to that if possible or use
-        what was in the template. -->
-        <!-- The template said: <spock.version>2.4-groovy-5.0</spock.version> and
-        <groovy.version>5.0.3</groovy.version>. I'll use that. -->
-        <spock.version>2.4-groovy-2.5</spock.version> <!-- Reverting to a known stable version if I
-        can't be sure about 5.0, but I should trust the skill. -->
-        <!-- Actually, looking at the template again: <spock.version>2.4-groovy-5.0</spock.version> -->
-        <groovy.version>4.0.24</groovy.version> <!-- Spock 2.4 supports Groovy 2.5, 3.0, 4.0. Groovy
-        5 support might be bleeding edge? The skill says "groovy-5.0". I will trust the skill. -->
+        <spock.version>2.4-groovy-5.0</spock.version>
+        <groovy.version>5.0.3</groovy.version>
         <slf4j.version>2.0.16</slf4j.version>
         <logback.version>1.5.12</logback.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <gmavenplus-plugin.version>4.0.1</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>4.2.1</gmavenplus-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
     </properties>
 
@@ -72,7 +63,7 @@
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-core</artifactId>
-                <version>2.4-groovy-4.0</version> <!-- Using 4.0 as it is stable -->
+                <version>${spock.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -150,5 +141,6 @@
     </build>
 
     <modules>
+        <module>ansel</module>
     </modules>
 </project>
