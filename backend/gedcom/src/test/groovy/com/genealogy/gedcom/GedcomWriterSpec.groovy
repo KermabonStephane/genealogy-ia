@@ -15,8 +15,8 @@ class GedcomWriterSpec extends Specification {
         
         def header = new GedcomHeader(
             source,
-            "ANY",
-            null,
+            ["ANY", "OTHER"],
+            new GedcomHeader.TransmissionDate(java.time.LocalDate.of(2024, 1, 1), null),
             null,
             null,
             "test.ged",
@@ -38,6 +38,8 @@ class GedcomWriterSpec extends Specification {
         output.contains("2 VERS 2.0")
         output.contains("2 NAME My App")
         output.contains("1 DEST ANY")
+        output.contains("1 DEST OTHER")
+        output.contains("1 DATE 1 JAN 2024")
         output.contains("1 GEDC")
         output.contains("2 VERS 5.5.1")
         output.contains("2 FORM LINEAGE-LINKED")

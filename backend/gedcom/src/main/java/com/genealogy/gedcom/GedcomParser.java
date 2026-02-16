@@ -3,14 +3,24 @@ package com.genealogy.gedcom;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GedcomParser {
 
+    private static final DateTimeFormatter HEADER_DATE_FORMATTER = new DateTimeFormatterBuilder()
+            .parseCaseInsensitive()
+            .appendPattern("d MMM yyyy")
+            .toFormatter(Locale.ENGLISH);
 
     public GedcomSubmission parseSubmission(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -25,13 +35,14 @@ public class GedcomParser {
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("SUBN".equals(line.tag())) {
+                    if ("SUBN".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -45,18 +56,21 @@ public class GedcomParser {
                     case "ANCE" -> ancestorsCount = line.value();
                     case "DESC" -> descendantsCount = line.value();
                     case "ORDI" -> ordinanceFlag = line.value();
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE
+                // CHAN.DATE
             }
         }
 
-        return new GedcomSubmission(xref, submitterXref, familyFileName, templeCode, ancestorsCount, descendantsCount, ordinanceFlag, changeDate);
+        return new GedcomSubmission(xref, submitterXref, familyFileName, templeCode, ancestorsCount, descendantsCount,
+                ordinanceFlag, changeDate);
     }
 
     public GedcomSubmitter parseSubmitter(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -71,13 +85,14 @@ public class GedcomParser {
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("SUBM".equals(line.tag())) {
+                    if ("SUBM".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -91,10 +106,11 @@ public class GedcomParser {
                     case "EMAIL" -> email = line.value();
                     case "WWW" -> www = line.value();
                     case "LANG" -> language = line.value();
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE or ADDR continuation
+                // CHAN.DATE or ADDR continuation
             }
         }
 
@@ -102,7 +118,8 @@ public class GedcomParser {
     }
 
     public GedcomSource parseSource(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -117,13 +134,14 @@ public class GedcomParser {
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("SOUR".equals(line.tag())) {
+                    if ("SOUR".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -137,10 +155,11 @@ public class GedcomParser {
                     case "ABBR" -> abbreviation = line.value();
                     case "REPO" -> repositoryXref = line.value();
                     case "TEXT" -> text = line.value(); // Could be multi-line with CONT
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE or TEXT continuation
+                // CHAN.DATE or TEXT continuation
             }
         }
 
@@ -148,7 +167,8 @@ public class GedcomParser {
     }
 
     public GedcomRepository parseRepository(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -162,13 +182,14 @@ public class GedcomParser {
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("REPO".equals(line.tag())) {
+                    if ("REPO".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -181,10 +202,11 @@ public class GedcomParser {
                     case "PHON" -> phone = line.value();
                     case "EMAIL" -> email = line.value();
                     case "WWW" -> www = line.value();
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE or ADDR continuation
+                // CHAN.DATE or ADDR continuation
             }
         }
 
@@ -192,7 +214,8 @@ public class GedcomParser {
     }
 
     public GedcomMultimedia parseMultimedia(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -202,18 +225,19 @@ public class GedcomParser {
         String fileMode = null; // Normally stored in FILE tag or sub-record in 5.5.1
         // In 5.5.1, OBJE has FILE sub-record. In 5.5 OBJE has FORM, TITL, FILE.
         // Let's assume a simplified structure where FILE contains the path/mode.
-        
+
         String changeDate = null;
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("OBJE".equals(line.tag())) {
+                    if ("OBJE".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -224,10 +248,11 @@ public class GedcomParser {
                     case "FORM" -> format = line.value();
                     case "TITL" -> title = line.value();
                     case "FILE" -> fileMode = line.value(); // In 5.5.1 this is likely the filename
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE
+                // CHAN.DATE
             }
         }
 
@@ -235,28 +260,30 @@ public class GedcomParser {
     }
 
     public GedcomNote parseNote(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
         String xref = null;
         String value = null;
         String changeDate = null;
-        
+
         StringBuilder noteBuilder = new StringBuilder();
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("NOTE".equals(line.tag())) {
+                    if ("NOTE".equals(line.tag())) {
                         xref = line.xref();
                         if (line.value() != null) {
                             noteBuilder.append(line.value());
                         }
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -265,27 +292,32 @@ public class GedcomParser {
             if (line.level() == 1) {
                 switch (line.tag()) {
                     case "CONC" -> {
-                         if (line.value() != null) noteBuilder.append(line.value());
+                        if (line.value() != null)
+                            noteBuilder.append(line.value());
                     }
                     case "CONT" -> {
-                         noteBuilder.append("\n"); 
-                         if (line.value() != null) noteBuilder.append(line.value());
+                        noteBuilder.append("\n");
+                        if (line.value() != null)
+                            noteBuilder.append(line.value());
                     }
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
-                 // CHAN.DATE
+                // CHAN.DATE
             }
         }
-        
+
         value = noteBuilder.toString();
-        if (value.isEmpty()) value = null;
+        if (value.isEmpty())
+            value = null;
 
         return new GedcomNote(xref, value, changeDate);
     }
 
     public GedcomFamily parseFamily(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -303,13 +335,14 @@ public class GedcomParser {
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("FAM".equals(line.tag())) {
+                    if ("FAM".equals(line.tag())) {
                         xref = line.xref();
-                   }
+                    }
                 } else {
                     break;
                 }
@@ -317,8 +350,13 @@ public class GedcomParser {
 
             if (line.level() == 1) {
                 if (currentEventType != null) {
-                     events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, currentEventNote));
-                     currentEventType = null; currentEventDate = null; currentEventPlace = null; currentEventNote = null;
+                    events.add(new GedcomEvent(currentEventType,
+                            currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace,
+                            currentEventNote));
+                    currentEventType = null;
+                    currentEventDate = null;
+                    currentEventPlace = null;
+                    currentEventNote = null;
                 }
 
                 switch (line.tag()) {
@@ -326,26 +364,33 @@ public class GedcomParser {
                     case "WIFE" -> wifeXref = line.value();
                     case "CHIL" -> childrenXrefs.add(line.value());
                     case "MARR", "DIV" -> currentEventType = line.tag();
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
                 if (currentEventType != null) {
-                    if ("DATE".equals(line.tag())) currentEventDate = line.value();
-                    if ("PLAC".equals(line.tag())) currentEventPlace = line.value();
-                    if ("NOTE".equals(line.tag())) currentEventNote = line.value();
+                    if ("DATE".equals(line.tag()))
+                        currentEventDate = line.value();
+                    if ("PLAC".equals(line.tag()))
+                        currentEventPlace = line.value();
+                    if ("NOTE".equals(line.tag()))
+                        currentEventNote = line.value();
                 }
             }
         }
-        
+
         if (currentEventType != null) {
-             events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, currentEventNote));
+            events.add(new GedcomEvent(currentEventType,
+                    currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace,
+                    currentEventNote));
         }
 
         return new GedcomFamily(xref, husbandXref, wifeXref, childrenXrefs, events, changeDate);
     }
 
     public GedcomIndividual parseIndividual(Reader reader) throws IOException {
-        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
+        BufferedReader bufferedReader = (reader instanceof BufferedReader) ? (BufferedReader) reader
+                : new BufferedReader(reader);
         String lineStr;
         GedcomLine line;
 
@@ -368,17 +413,19 @@ public class GedcomParser {
         String currentEventType = null;
         String currentEventDate = null;
         String currentEventPlace = null;
-        
+
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if (xref == null) {
-                   if ("INDI".equals(line.tag())) {
+                    if ("INDI".equals(line.tag())) {
                         xref = line.xref();
-                   }
-                   // If tag is not INDI, we might be skipping? For now, if we call parseIndividual, assume first record is INDI.
+                    }
+                    // If tag is not INDI, we might be skipping? For now, if we call
+                    // parseIndividual, assume first record is INDI.
                 } else {
                     break;
                 }
@@ -386,12 +433,23 @@ public class GedcomParser {
 
             if (line.level() == 1) {
                 if (currentNameValue != null) {
-                    names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname, currentPrefix, currentSurnamePrefix, currentSuffix));
-                    currentNameValue = null; currentGiven = null; currentSurname = null; currentNickname = null; currentPrefix = null; currentSurnamePrefix = null; currentSuffix = null;
+                    names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname,
+                            currentPrefix, currentSurnamePrefix, currentSuffix));
+                    currentNameValue = null;
+                    currentGiven = null;
+                    currentSurname = null;
+                    currentNickname = null;
+                    currentPrefix = null;
+                    currentSurnamePrefix = null;
+                    currentSuffix = null;
                 }
                 if (currentEventType != null) {
-                     events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, null));
-                     currentEventType = null; currentEventDate = null; currentEventPlace = null;
+                    events.add(new GedcomEvent(currentEventType,
+                            currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace,
+                            null));
+                    currentEventType = null;
+                    currentEventDate = null;
+                    currentEventPlace = null;
                 }
 
                 switch (line.tag()) {
@@ -400,7 +458,8 @@ public class GedcomParser {
                     case "BIRT", "DEAT", "CHR", "BURI" -> currentEventType = line.tag();
                     case "FAMS" -> fams.add(line.value());
                     case "FAMC" -> famc.add(line.value());
-                    case "CHAN" -> {} 
+                    case "CHAN" -> {
+                    }
                 }
             } else if (line.level() == 2) {
                 if (currentNameValue != null) {
@@ -414,17 +473,21 @@ public class GedcomParser {
                     }
                 }
                 if (currentEventType != null) {
-                    if ("DATE".equals(line.tag())) currentEventDate = line.value();
-                    if ("PLAC".equals(line.tag())) currentEventPlace = line.value();
+                    if ("DATE".equals(line.tag()))
+                        currentEventDate = line.value();
+                    if ("PLAC".equals(line.tag()))
+                        currentEventPlace = line.value();
                 }
             }
         }
-        
+
         if (currentNameValue != null) {
-             names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname, currentPrefix, currentSurnamePrefix, currentSuffix));
+            names.add(new GedcomName(currentNameValue, currentGiven, currentSurname, currentNickname, currentPrefix,
+                    currentSurnamePrefix, currentSuffix));
         }
         if (currentEventType != null) {
-             events.add(new GedcomEvent(currentEventType, currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, null));
+            events.add(new GedcomEvent(currentEventType,
+                    currentEventDate != null ? new GedcomDate(currentEventDate) : null, currentEventPlace, null));
         }
 
         return new GedcomIndividual(xref, names, sex, events, fams, famc, changeDate);
@@ -437,7 +500,7 @@ public class GedcomParser {
         String sourceSystemId = null;
         String sourceVersion = null;
         String sourceName = null;
-        String dest = null;
+        List<String> destinations = new ArrayList<>();
         String charSet = null;
         String gedcomVer = null;
         String gedcomForm = null;
@@ -445,19 +508,20 @@ public class GedcomParser {
         String submXref = null;
         String dateStr = null;
         String timeStr = null;
+        StringBuilder noteBuilder = null;
 
         GedcomLine line;
         // Simple context tracking: the last Level 1 tag seen
         String lastLevel1Tag = null;
-        String lastLevel2Tag = null;
 
         while ((lineStr = bufferedReader.readLine()) != null) {
             line = GedcomLine.parse(lineStr);
-            if (line == null) continue;
+            if (line == null)
+                continue;
 
             if (line.level() == 0) {
                 if ("HEAD".equals(line.tag())) {
-                    continue; 
+                    continue;
                 } else {
                     // Non-HEAD level 0 record means header is done
                     break;
@@ -468,56 +532,79 @@ public class GedcomParser {
                 lastLevel1Tag = line.tag();
                 switch (line.tag()) {
                     case "SOUR" -> sourceSystemId = line.value();
-                    case "DEST" -> dest = line.value();
+                    case "DEST" -> destinations.add(line.value());
                     case "FILE" -> fileName = line.value();
                     case "CHAR" -> charSet = line.value();
                     case "SUBM" -> submXref = line.value();
                     case "DATE" -> dateStr = line.value();
+                    case "NOTE" -> {
+                        noteBuilder = new StringBuilder();
+                        if (line.value() != null)
+                            noteBuilder.append(line.value());
+                    }
                 }
             } else if (line.level() == 2) {
-                lastLevel2Tag = line.tag();
-                if ("GEDC".equals(lastLevel1Tag)) {
-                    if ("VERS".equals(line.tag())) gedcomVer = line.value();
-                    if ("FORM".equals(line.tag())) gedcomForm = line.value();
+                if ("NOTE".equals(lastLevel1Tag) && noteBuilder != null) {
+                    if ("CONT".equals(line.tag())) {
+                        noteBuilder.append(" ");
+                        if (line.value() != null)
+                            noteBuilder.append(line.value());
+                    } else if ("CONC".equals(line.tag())) {
+                        if (line.value() != null)
+                            noteBuilder.append(line.value());
+                    }
+                } else if ("GEDC".equals(lastLevel1Tag)) {
+                    if ("VERS".equals(line.tag()))
+                        gedcomVer = line.value();
+                    if ("FORM".equals(line.tag()))
+                        gedcomForm = line.value();
                 } else if ("SOUR".equals(lastLevel1Tag)) {
-                    if ("VERS".equals(line.tag())) sourceVersion = line.value();
-                    if ("NAME".equals(line.tag())) sourceName = line.value();
+                    if ("VERS".equals(line.tag()))
+                        sourceVersion = line.value();
+                    if ("NAME".equals(line.tag()))
+                        sourceName = line.value();
                 } else if ("DATE".equals(lastLevel1Tag)) {
-                    if ("TIME".equals(line.tag())) timeStr = line.value();
+                    if ("TIME".equals(line.tag()))
+                        timeStr = line.value();
                 }
             }
         }
 
         GedcomHeader.GedcomVersion gv = new GedcomHeader.GedcomVersion(gedcomVer, gedcomForm);
         GedcomHeader.Source src = new GedcomHeader.Source(sourceSystemId, sourceVersion, sourceName, null, null);
-        
+
         GedcomHeader.TransmissionDate transmissionDate = null;
         if (dateStr != null) {
-            // Basic time parsing if needed, but for now passing null or implementing simple parse
-            java.time.LocalTime time = null;
+            LocalDate date = null;
+            try {
+                date = LocalDate.parse(dateStr, HEADER_DATE_FORMATTER);
+            } catch (Exception e) {
+                // Basic fallback or error handling could be added here
+            }
+
+            LocalTime time = null;
             if (timeStr != null) {
                 try {
-                     time = java.time.LocalTime.parse(timeStr);
+                    time = LocalTime.parse(timeStr);
                 } catch (Exception e) {
                     // Ignore or log
                 }
             }
-            transmissionDate = new GedcomHeader.TransmissionDate(dateStr, time);
+            transmissionDate = new GedcomHeader.TransmissionDate(date, time);
         }
 
         return new GedcomHeader(
-            src,
-            dest,
-            transmissionDate, 
-            submXref,
-            null,
-            fileName,
-            null,
-            gv,
-            charSet,
-            null,
-            null,
-            null
-        );
+                src,
+                destinations,
+                transmissionDate,
+                submXref,
+                null,
+                fileName,
+                null,
+                gv,
+                charSet,
+                null,
+                null,
+                noteBuilder != null ? noteBuilder.toString() : null);
     }
 }
